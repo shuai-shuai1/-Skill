@@ -1,0 +1,2 @@
+item_id,reviewer,original_comment,issue_type,severity,affected_section,evidence_needed,response_type,action,status,location,verification,notes
+R1-01,Reviewer 1,Replace with one atomic reviewer request,METHOD,MAJOR,Methods,,ACCEPTED,Describe the exact revision,OPEN,,Not checked,Remove placeholder before use

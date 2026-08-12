@@ -1,0 +1,2 @@
+canonical_term,aliases,definition,unit,scope,first_definition_location,notes
+Weighted F1,F1 weighted|weighted-F1,Support-weighted mean of per-class F1,dimensionless,classification evaluation,,Example only; replace with project terminology

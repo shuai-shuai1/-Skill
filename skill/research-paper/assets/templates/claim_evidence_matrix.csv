@@ -1,0 +1,2 @@
+claim_id,claim_text,evidence_ids,evidence_strength,section,figure_ids,allowed_wording,boundary,status,notes
+C001,Replace with a verifiable claim,E001,D,Results,,Replace with allowed wording,State population data configuration and conclusion boundary,UNSUPPORTED,Remove placeholder before drafting

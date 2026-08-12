@@ -1,0 +1,2 @@
+evidence_id,evidence_type,title,source_path,source_locator,version_or_run,collected_at,claim_ids,status,public_release,limitations,notes
+E001,UNVERIFIED,Replace with evidence title,Replace with file URL DOI or record,Replace with page table field or line,Replace with version or run ID,YYYY-MM-DD,C001,PENDING,NO,State what this evidence cannot support,Do not use this placeholder as evidence
