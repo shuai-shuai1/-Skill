@@ -48,3 +48,13 @@
 6. 创建明确提交；
 7. 推送非破坏性分支或用户指定目标；
 8. 发布时添加语义化版本标签。
+
+Windows 发布建议先设置：
+
+```powershell
+$env:PYTHONDONTWRITEBYTECODE='1'
+$env:PYTHONUTF8='1'
+python -B -m unittest discover -s tests -v
+```
+
+上游验证与打包工具依赖 PyYAML；开发环境使用 `python -m pip install -e ".[dev]"`。打包前检查并排除 `__pycache__`、`.pyc`、测试输出和私有论文材料。

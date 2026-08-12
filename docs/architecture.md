@@ -27,7 +27,7 @@ Trigger metadata
 
 ### assets/templates
 
-职责：定义跨任务稳定的数据结构，包括 Paper Brief、Evidence Ledger、Claim-Evidence Matrix、Figure Specification 和 PPT Reproduction Specification。
+职责：定义跨任务稳定的数据结构，包括 Paper Brief、Evidence Ledger、Claim-Evidence Matrix、Review Issue Ledger、Figure Specification 和 PPT Reproduction Specification。
 
 ### scripts
 
@@ -47,7 +47,7 @@ User materials
  -> Paper Brief
  -> Evidence Ledger
  -> Claim-Evidence Matrix
- -> Chapter plan + Figure Specifications
+ -> Chapter plan + Polishing/Review contracts + Figure Specifications
  -> Manuscript + Figure Packages
  -> Deterministic audits + expert review
  -> Delivery package
@@ -69,6 +69,20 @@ Scientific requirement
 ```
 
 像素比较仅用于用户自有、AI 生成、授权或允许复现的参考图。对外部论文图默认进入结构保真重绘，不进入逐像素目标。
+
+## 润色与模拟评审边界
+
+```text
+Manuscript snapshot
+ -> task / paper type / section / language / venue profile
+ -> consistency sweep
+ -> bounded polish
+ -> immutable review packet
+ -> source-grounded issue ledger
+ -> post-review synthesis or re-review
+```
+
+风格配置不改变证据强度。模拟评审视角不是虚构人物；只有真实隔离上下文时才允许声明相互盲审。评审建议由未关闭 Major 与阻断项约束，综合分只能辅助诊断。
 
 ## 依赖策略
 

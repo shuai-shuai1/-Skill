@@ -49,6 +49,23 @@ class SkillStructureTests(unittest.TestCase):
         self.assertFalse((SKILL_DIR / "references" / "api_reference.md").exists())
         self.assertFalse((SKILL_DIR / "assets" / "example_asset.txt").exists())
 
+    def test_polishing_and_review_contracts_are_linked(self) -> None:
+        skill = (SKILL_DIR / "SKILL.md").read_text(encoding="utf-8")
+        for relative in (
+            "references/polishing-and-style-profiles.md",
+            "references/peer-review-and-rereview.md",
+            "assets/templates/review_issue_ledger.csv",
+            "assets/templates/reviewer_report.md",
+        ):
+            self.assertIn(relative, skill)
+
+        review = (SKILL_DIR / "references" / "peer-review-and-rereview.md").read_text(
+            encoding="utf-8"
+        )
+        self.assertIn("相互盲审", review)
+        self.assertIn("FULLY_ADDRESSED", review)
+        self.assertIn("resolution_test", review)
+
 
 if __name__ == "__main__":
     unittest.main()

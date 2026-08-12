@@ -1,6 +1,6 @@
 [project]
 name = "research-paper-skill"
-version = "0.1.0"
+version = "0.2.0"
 description = "Evidence-driven research paper writing and reproducible scientific figure skill"
 readme = "README.md"
 requires-python = ">=3.10"
@@ -9,6 +9,9 @@ dependencies = [
   "Pillow>=10.0",
   "matplotlib>=3.7",
 ]
+
+[project.optional-dependencies]
+dev = ["PyYAML>=6.0"]
 
 [project.urls]
 Repository = "https://github.com/shuai-shuai1/-Skill"

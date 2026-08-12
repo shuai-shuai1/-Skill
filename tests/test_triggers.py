@@ -16,6 +16,8 @@ class TriggerCaseTests(unittest.TestCase):
         self.assertGreaterEqual(len(cases["negative"]), 5)
         self.assertTrue(any("GPT Image 2" in case for case in cases["positive"]))
         self.assertTrue(any("PowerPoint" in case for case in cases["positive"]))
+        self.assertTrue(any("润色" in case for case in cases["positive"]))
+        self.assertTrue(any("复审" in case for case in cases["positive"]))
 
     def test_skill_description_mentions_critical_routes(self) -> None:
         skill = (ROOT / "skill" / "research-paper" / "SKILL.md").read_text(
@@ -28,6 +30,8 @@ class TriggerCaseTests(unittest.TestCase):
             "GPT Image 2",
             "PowerPoint",
             "reviewer-response",
+            "simulated peer review",
+            "polishing",
         ):
             self.assertIn(phrase.lower(), frontmatter)
 

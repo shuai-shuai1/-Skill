@@ -29,11 +29,25 @@ HIGH_RISK_TERMS = {
     "显著优于": "Significance claims require a stated statistical test and evidence.",
     "显著提升": "Significance claims require a stated statistical test and evidence.",
     "充分证明": "Proof language is usually stronger than empirical evidence permits.",
+    "充分验证": "Strong validation language requires independent, scope-matched evidence.",
+    "有力证明": "Proof language is usually stronger than empirical evidence permits.",
     "完全解决": "Absolute claims require exhaustive evidence and a defined scope.",
     "大幅优于": "Magnitude claims require a fair comparator and reported values.",
     "state-of-the-art": "SOTA claims require a complete, fair, current comparison.",
     "significantly outperforms": "Significance claims require a stated statistical test.",
     "proves that": "Proof language is usually stronger than empirical evidence permits.",
+}
+CONTEXT_RISK_TERMS = {
+    "最优": "Optimality requires a defined search space, objective, and comparison protocol.",
+    "精准": "Precision language should name the metric, tolerance, and evaluation conditions.",
+    "极低信噪比": "Low-SNR scope requires an explicit SNR definition and tested range.",
+    "实时性": "Real-time claims require hardware, workload, timing protocol, and latency target.",
+    "工程可接受": "Engineering acceptability requires a stated requirement or deployment criterion.",
+    "无先验": "Prior-free claims must disclose all target-count, tuning, and selection information.",
+    "无需先验": "Prior-free claims must disclose all target-count, tuning, and selection information.",
+    "optimal": "Optimality requires a defined search space, objective, and comparison protocol.",
+    "real-time": "Real-time claims require hardware, workload, timing protocol, and latency target.",
+    "prior-free": "Prior-free claims must disclose all tuning and selection information.",
 }
 NUMERIC_CLAIM_RE = re.compile(
     r"(?<![A-Za-z0-9_])[-+]?\d+(?:\.\d+)?\s*(?:%|‰|ms|s|h|Hz|kHz|MHz|GHz|"
@@ -216,6 +230,17 @@ def audit(
                         severity,
                         "HIGH_RISK_CLAIM",
                         f"High-risk phrase '{phrase}' detected. {guidance}",
+                        row=line_number,
+                    )
+                )
+
+        for phrase, guidance in CONTEXT_RISK_TERMS.items():
+            if phrase.lower() in lower_line:
+                issues.append(
+                    issue(
+                        "WARNING",
+                        "CONTEXT_DEPENDENT_CLAIM",
+                        f"Context-dependent phrase '{phrase}' detected. {guidance}",
                         row=line_number,
                     )
                 )

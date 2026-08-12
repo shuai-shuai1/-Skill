@@ -1,0 +1,2 @@
+issue_id,perspective,severity,blocking,axis,claim_pointer,evidence_pointer,concern,impact,resolution_test,status,rereview_note
+R1-M1,technical-validity,MAJOR,YES,METHOD,Section or claim ID,Evidence ID or source location,Replace with one specific source-grounded concern,Explain how this affects the central case,Define an observable condition that closes the concern,OPEN,

@@ -1,6 +1,6 @@
 ---
 name: research-paper
-description: Evidence-driven research-paper planning, writing, revision, experiment-to-paper conversion, reviewer-response handling, reproducibility auditing, and publication-quality scientific figure production. Use for engineering, computer-science, and AI empirical manuscripts when Codex must plan or restructure a paper, audit claims against literature/data/logs, distinguish measured/logged/derived/theoretical/synthetic evidence, draft or revise sections without changing data meaning, turn experiments into defensible methods/results, create reproducible data figures or editable vector diagrams, optionally generate scientific bitmap concepts with GPT Image 2 and reconstruct them as editable PowerPoint figures with render-difference QA, respond to reviewers, or run a pre-submission consistency check.
+description: Evidence-driven research-paper planning, writing, polishing, experiment-to-paper conversion, simulated peer review and re-review, reviewer-response handling, reproducibility auditing, and publication-quality scientific figures. Use for engineering, computer-science, and AI empirical manuscripts when Codex must audit claims against literature/data/logs; revise or polish sections without changing data meaning; apply generic, Chinese-core, or explicit Nature-family style profiles; turn experiments into defensible methods/results; create reproducible plots or editable diagrams; optionally generate a scientific bitmap concept with GPT Image 2 and reconstruct it in PowerPoint with render-difference QA; review a manuscript; respond to reviewers; or run a pre-submission consistency check.
 ---
 
 # 科研论文
@@ -31,8 +31,10 @@ description: Evidence-driven research-paper planning, writing, revision, experim
 | `plan` | 研究材料零散、主线未定、需要逐章规划 | Paper Brief、章节计划、缺口清单 |
 | `evidence-audit` | 判断现有材料能否支撑结论 | Evidence Ledger、Claim-Evidence Matrix、风险清单 |
 | `experiment-to-paper` | 从代码、配置、日志和结果写方法/实验/结果 | 实验契约、可复现描述、结果段落、限制 |
-| `write-revise` | 从零写作、局部改稿、重构或语言精修 | 修改稿、保留口径、修改说明 |
+| `write-revise` | 从零写作、局部改稿或论证重构 | 修改稿、保留口径、修改说明 |
+| `polish` | 校对、清晰化、分层润色、翻译或期刊风格适配 | 润色稿、修改级别、风格配置、一致性报告 |
 | `figure` | 数据图、模型图、系统图、流程图或重绘式复现 | Figure Package、源数据/代码、矢量/位图、图注 |
+| `peer-review` | 投稿前模拟评审、方法专项审查或修改稿复审 | Major/Minor 问题、阻断项、问题台账、评审建议 |
 | `review-response` | 拆解审稿意见并完成修改回复 | Revision Tracker、逐条回复、修改位置 |
 | `pre-submit` | 投稿前终审 | 阻断项、警告项、通过项、提交建议 |
 
@@ -44,11 +46,13 @@ description: Evidence-driven research-paper planning, writing, revision, experim
 - 主张、数据来源、引用真实性或结论边界：读 [evidence-and-claims.md](references/evidence-and-claims.md)。
 - 选章节结构、分配篇幅、设计叙事：读 [paper-architecture.md](references/paper-architecture.md)。
 - 写作、改稿、摘要、结果和讨论：读 [academic-writing.md](references/academic-writing.md)。
+- 论文校对、结构润色、全文一致性或期刊风格适配：额外读 [polishing-and-style-profiles.md](references/polishing-and-style-profiles.md)。
 - 从实验代码或日志写论文：读 [experiment-reproducibility.md](references/experiment-reproducibility.md)。
 - 统计图、曲线、混淆矩阵、消融图：读 [data-figures.md](references/data-figures.md)。
 - 系统图、CNN 图、流程图、参考图重绘：读 [diagrams-and-reproduction.md](references/diagrams-and-reproduction.md)。
 - GPT Image 2 生成后用 PPT 做可编辑高保真复现：额外读 [ppt-pixel-reproduction.md](references/ppt-pixel-reproduction.md)。
 - 审稿意见、回复信和修改追踪：读 [revision-and-review.md](references/revision-and-review.md)。
+- 模拟同行评审、方法专项审查或复审：读 [peer-review-and-rereview.md](references/peer-review-and-rereview.md)。
 - 投稿前或交付前：读 [quality-gates.md](references/quality-gates.md)。
 
 不要一次性加载全部参考文件。
@@ -97,6 +101,10 @@ python scripts/init_paper_workspace.py <workspace> --title "<paper title>"
 
 正文中的重要事实可暂用 `[E:E001]` 形式关联内部证据台账；最终投稿前按期刊需要移除内部标签，但保留台账。
 
+全文润色先锁定论文类型、章节任务、修改级别、语言和风格配置，再运行数字与术语一致性扫描。默认使用 `generic`；只有用户明确目标期刊时才启用对应期刊配置。
+
+模拟评审先冻结输入包，再记录带 claim/evidence 指针和验收条件的问题。无法提供独立上下文时，只输出整合式评审并披露限制，不宣称多个审稿人相互盲审。
+
 ### 5. 生成图件
 
 先填写 `assets/templates/figure_spec.md`，说明图要支持的主张、数据来源、图件类型、尺寸和输出格式。
@@ -111,6 +119,7 @@ python scripts/init_paper_workspace.py <workspace> --title "<paper title>"
 
 ```text
 python scripts/audit_manuscript.py manuscript.md --ledger evidence_ledger.csv
+python scripts/audit_review_package.py review_issue_ledger.csv --recommendation MAJOR_REVISION
 python scripts/figure_qa.py figure.png --output figure_qa.json
 python scripts/compare_figure_renders.py reference.png candidate.png --output qa/compare.json
 ```
@@ -147,6 +156,8 @@ Figure Package 至少包含：
 - `assets/templates/figure_spec.md`
 - `assets/templates/terminology_metrics.csv`
 - `assets/templates/revision_tracker.csv`
+- `assets/templates/review_issue_ledger.csv`
+- `assets/templates/reviewer_report.md`
 - `assets/templates/ppt_reproduction_spec.md`
 
 ### 脚本
@@ -154,6 +165,7 @@ Figure Package 至少包含：
 - `scripts/init_paper_workspace.py`：建立非覆盖式论文工作区。
 - `scripts/audit_evidence_ledger.py`：检查证据类型、来源、状态和可追溯性。
 - `scripts/audit_manuscript.py`：检查占位符、高风险措辞、数字主张和证据标签。
+- `scripts/audit_review_package.py`：检查模拟评审问题、阻断标记、复审状态和建议的一致性。
 - `scripts/figure_style.py`：提供可复用的 Matplotlib 期刊样式与溯源侧车文件。
 - `scripts/figure_qa.py`：检查位图尺寸、DPI、对比度和空白占比。
 - `scripts/compare_figure_renders.py`：对齐参考图与 PPT 渲染图并输出差分指标和图像。

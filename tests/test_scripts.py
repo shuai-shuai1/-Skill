@@ -91,6 +91,73 @@ class ManuscriptTests(unittest.TestCase):
             self.assertIn("HIGH_RISK_CLAIM", codes)
             self.assertIn("UNKNOWN_EVIDENCE_TAG", codes)
 
+    def test_context_dependent_engineering_claims_are_warned(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            manuscript = Path(tmp) / "claim.md"
+            report_path = Path(tmp) / "report.json"
+            manuscript.write_text(
+                "该方法获得最优结果，并满足工程实时性要求。\n", encoding="utf-8"
+            )
+            result = run_script(
+                "audit_manuscript.py",
+                manuscript,
+                "--json",
+                report_path,
+            )
+            self.assertEqual(result.returncode, 0, result.stderr + result.stdout)
+            report = json.loads(report_path.read_text(encoding="utf-8"))
+            findings = [
+                item
+                for item in report["issues"]
+                if item["code"] == "CONTEXT_DEPENDENT_CLAIM"
+            ]
+            self.assertGreaterEqual(len(findings), 2)
+
+
+class ReviewPackageTests(unittest.TestCase):
+    def test_valid_full_review_ledger_passes(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            report_path = Path(tmp) / "review.json"
+            result = run_script(
+                "audit_review_package.py",
+                FIXTURES / "review_valid.csv",
+                "--recommendation",
+                "MAJOR_REVISION",
+                "--require-perspectives",
+                3,
+                "--json",
+                report_path,
+            )
+            self.assertEqual(result.returncode, 0, result.stderr + result.stdout)
+            report = json.loads(report_path.read_text(encoding="utf-8"))
+            self.assertEqual(report["status"], "PASS")
+            self.assertEqual(report["perspective_count"], 3)
+            self.assertEqual(report["unresolved_blocking_count"], 1)
+
+    def test_invalid_review_ledger_blocks_ready_recommendation(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            report_path = Path(tmp) / "review.json"
+            result = run_script(
+                "audit_review_package.py",
+                FIXTURES / "review_invalid.csv",
+                "--recommendation",
+                "READY",
+                "--json",
+                report_path,
+            )
+            self.assertEqual(result.returncode, 1)
+            report = json.loads(report_path.read_text(encoding="utf-8"))
+            codes = {item["code"] for item in report["issues"]}
+            for code in (
+                "DUPLICATE_REVIEW_ID",
+                "MINOR_CANNOT_BLOCK",
+                "REVIEW_FIELD_MISSING",
+                "INVALID_REVIEW_AXIS",
+                "READY_WITH_OPEN_MAJOR",
+                "RECOMMENDATION_WITH_BLOCKER",
+            ):
+                self.assertIn(code, codes)
+
 
 class WorkspaceTests(unittest.TestCase):
     def test_workspace_initializer_is_non_destructive(self) -> None:
@@ -101,7 +168,9 @@ class WorkspaceTests(unittest.TestCase):
             )
             self.assertEqual(first.returncode, 0, first.stderr + first.stdout)
             brief = workspace / "paper" / "paper_brief.md"
+            review_ledger = workspace / "reviews" / "review_issue_ledger.csv"
             self.assertIn("Synthetic Test Paper", brief.read_text(encoding="utf-8"))
+            self.assertTrue(review_ledger.exists())
             brief.write_text("user content\n", encoding="utf-8")
             second = run_script(
                 "init_paper_workspace.py", workspace, "--update-missing"

@@ -1,0 +1,4 @@
+issue_id,perspective,severity,blocking,axis,claim_pointer,evidence_pointer,concern,impact,resolution_test,status,rereview_note
+R1-M1,technical-validity,MAJOR,YES,METHOD,Methods,E001,Specific concern,Central impact,Observable closure condition,OPEN,
+R1-M1,technical-validity,MAJOR,YES,UNKNOWN_AXIS,,,Missing pointers,,,FULLY_ADDRESSED,
+R2-m1,readability-reuse,MINOR,YES,WRITING,Abstract,E003,Specific minor concern,Local clarity impact,Observable closure condition,OPEN,

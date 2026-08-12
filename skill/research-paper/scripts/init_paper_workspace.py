@@ -28,6 +28,8 @@ TEMPLATE_MAP = {
     "terminology_metrics.csv": "evidence/terminology_metrics.csv",
     "figure_spec.md": "figures/specs/figure_spec_template.md",
     "revision_tracker.csv": "reviews/revision_tracker.csv",
+    "review_issue_ledger.csv": "reviews/review_issue_ledger.csv",
+    "reviewer_report.md": "reviews/reviewer_report_template.md",
     "ppt_reproduction_spec.md": "figures/specs/ppt_reproduction_spec_template.md",
 }
 
