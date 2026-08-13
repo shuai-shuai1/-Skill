@@ -1,0 +1,3 @@
+claim_id,claim_text,evidence_ids,evidence_strength,section,figure_ids,allowed_wording,boundary,status,notes
+C001,The method reaches the reported weighted F1 on the frozen synthetic test split,E001,B,Results,Fig. 3,The official synthetic run reports,Only the frozen synthetic split,SUPPORTED,
+C002,Prior work defines the comparison method,E002,B,Related Work,,The cited source defines,Only the cited method definition,SUPPORTED,
