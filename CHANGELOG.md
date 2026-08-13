@@ -1,5 +1,12 @@
 # Changelog
 
+## Unreleased
+
+- Renamed the public repository to `research-paper-skill` and aligned project links.
+- Added executable public examples for evidence auditing, bounded polishing, simulated peer review, and GPT Image 2 to editable PowerPoint reconstruction.
+- Added release, license, Python, and CI badges plus a task-oriented project overview.
+- Added GitHub issue forms and refreshed CI actions to Node 24-compatible versions.
+
 ## 0.2.0 - 2026-08-12
 
 - Added a dedicated polishing route with four edit levels and generic, Chinese-core, and explicit Nature-family profiles.

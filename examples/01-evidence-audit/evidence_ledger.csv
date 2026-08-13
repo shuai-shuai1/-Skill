@@ -1,0 +1,3 @@
+evidence_id,evidence_type,title,source_path,source_locator,version_or_run,collected_at,claim_ids,status,public_release,limitations,notes
+E001,MEASURED,Synthetic official test metrics,artifacts/run-042/report.json,metrics.weighted_f1,run-042,2026-08-13,C001,VERIFIED,YES,Supports only the frozen synthetic test split,Synthetic public example
+E002,LITERATURE,Verified method-definition source,https://doi.org/10.0000/example,Methods section,version-of-record,2026-08-13,C002,VERIFIED,YES,Does not validate this implementation,Placeholder DOI used only for a synthetic schema example

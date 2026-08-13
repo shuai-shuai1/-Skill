@@ -1,10 +1,27 @@
-# 科研论文 Skill
+# Research Paper Skill · 科研论文 Skill
 
-[![CI](https://github.com/shuai-shuai1/-Skill/actions/workflows/ci.yml/badge.svg)](https://github.com/shuai-shuai1/-Skill/actions/workflows/ci.yml)
+[![CI](https://github.com/shuai-shuai1/research-paper-skill/actions/workflows/ci.yml/badge.svg)](https://github.com/shuai-shuai1/research-paper-skill/actions/workflows/ci.yml)
+[![Release](https://img.shields.io/github/v/release/shuai-shuai1/research-paper-skill)](https://github.com/shuai-shuai1/research-paper-skill/releases)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Python 3.10+](https://img.shields.io/badge/Python-3.10%2B-3776AB.svg)](pyproject.toml)
 
-`research-paper` 是一个面向工程、计算机和人工智能实证论文的证据驱动写作与科研绘图 Skill。它把论文组织成一条可审计链：研究问题、主张、证据、实验或文献、正文、图表与结论边界。
+> Evidence-first research-paper writing, polishing, peer review and reproducible scientific figures for Codex.
 
-它不承诺“一键生成可投稿论文”。它优先阻止三类常见问题：无来源结论、实验口径混写，以及无法复现的科研图。
+`research-paper` 面向工程、计算机和人工智能实证论文，把论文组织成可审计链：
+
+`研究问题 → 主张 → 证据 → 实验/文献 → 正文 → 图表 → 结论边界`
+
+它不承诺“一键生成可投稿论文”。它优先拦截无来源结论、正式实验与 smoke/synthetic 结果混写、不可复现图件，以及无统计依据的“显著、稳定、实时”等表述。
+
+## 为什么使用它
+
+| 常见风险 | 本 Skill 的处理方式 |
+|---|---|
+| 写作很流畅，但结论没有来源 | Evidence Ledger + Claim-Evidence Matrix |
+| 单次结果被写成稳定或显著 | 多种子、不确定性与高风险措辞检查 |
+| 审稿意见只停留在泛泛建议 | 稳定问题 ID、Major/Minor、阻断项与验收条件 |
+| 数据图或概念图无法复现 | 数据/代码优先；可编辑源、溯源信息与图件 QA |
+| AI 概念图难以继续修改 | GPT Image 2 草案 → PowerPoint 分层重建 → 渲染差分 |
 
 ## 主要能力
 
@@ -21,7 +38,13 @@
 
 ## 安装
 
-把 `skill/research-paper` 复制到支持 Skills 的工具目录，或使用 `dist/research-paper.skill` 安装发行包。Skill 本体只需要 `SKILL.md`、`references/`、`scripts/` 和 `assets/`。
+从 [Releases](https://github.com/shuai-shuai1/research-paper-skill/releases) 下载 `research-paper.skill`，或克隆仓库后把 `skill/research-paper` 复制到支持 Skills 的工具目录：
+
+```powershell
+git clone https://github.com/shuai-shuai1/research-paper-skill.git
+```
+
+Skill 本体只需要 `SKILL.md`、`references/`、`scripts/` 和 `assets/`。
 
 运行位图 QA 和像素差异比较时需要 Pillow：
 
@@ -29,11 +52,27 @@
 python -m pip install -r skill/research-paper/scripts/requirements.txt
 ```
 
-## 使用示例
+## 30 秒开始
 
 ```text
-用 research-paper 帮我判断这些实验能否支撑论文第三章。
+使用 research-paper 审计这篇算法论文。先建立证据台账和主张—证据矩阵，
+区分正式实验、日志、推导和未验证结果；不要改动原稿。
 ```
+
+Skill 会优先输出：证据状态、核心阻断项、可安全使用的措辞，以及最小补证据动作，而不是直接生成无法核验的全文。
+
+## 示例展厅
+
+| 示例 | 展示内容 | 可执行检查 |
+|---|---|---|
+| [01 · 证据审计](examples/01-evidence-audit/) | 从合成实验记录建立证据链并审计论文结果段 | Evidence Ledger + manuscript audit |
+| [02 · 分层润色](examples/02-polishing/) | 中文算法论文从过度主张改为可核查表达 | L2结构润色 + 边界冻结 |
+| [03 · 模拟同行评审](examples/03-peer-review/) | 三视角整合评审、Major/Minor与阻断项 | review package audit |
+| [04 · GPT Image 2 → PPT](examples/04-gpt-image-to-ppt/) | 科研概念图的可编辑重建与像素差分流程 | render comparison contract |
+
+所有示例均为 synthetic/anonymized，不包含未公开论文或真实实验数据。完整索引见 [examples/README.md](examples/README.md)。
+
+## 更多调用方式
 
 ```text
 不要改数据口径，把这篇工程论文的结果和讨论重构成期刊风格。
@@ -69,7 +108,7 @@ python path/to/package_skill.py skill/research-paper dist
 
 GitHub Actions 会在 Python 3.10 和 3.12 上运行同一组测试，降低本地环境偶然通过的风险。
 
-架构、开发规范和路线图位于 `docs/`。贡献前请阅读 `CONTRIBUTING.md`。
+架构、开发规范和路线图位于 [`docs/`](docs/)。贡献前请阅读 [`CONTRIBUTING.md`](CONTRIBUTING.md)。
 
 ## 设计参考
 

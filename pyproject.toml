@@ -14,7 +14,9 @@ dependencies = [
 dev = ["PyYAML>=6.0"]
 
 [project.urls]
-Repository = "https://github.com/shuai-shuai1/-Skill"
+Repository = "https://github.com/shuai-shuai1/research-paper-skill"
+Issues = "https://github.com/shuai-shuai1/research-paper-skill/issues"
+Changelog = "https://github.com/shuai-shuai1/research-paper-skill/blob/main/CHANGELOG.md"
 
 [tool.unittest]
 start-directory = "tests"

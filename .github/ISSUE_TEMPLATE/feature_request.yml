@@ -1,0 +1,39 @@
+name: Feature request
+description: Propose a bounded, testable improvement to the research-paper workflow.
+title: "[Feature]: "
+labels: [enhancement]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Research workflow problem
+      description: What decision or failure mode is not handled well today?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed behavior
+      description: Describe the smallest useful behavior and expected output.
+    validations:
+      required: true
+  - type: dropdown
+    id: layer
+    attributes:
+      label: Likely architecture layer
+      options:
+        - Router or trigger
+        - Reference methodology
+        - Stable template
+        - Deterministic script
+        - Documentation or example
+        - Unsure
+    validations:
+      required: true
+  - type: textarea
+    id: validation
+    attributes:
+      label: Acceptance test
+      description: How should maintainers tell that this feature works without relying on private data?
+    validations:
+      required: true

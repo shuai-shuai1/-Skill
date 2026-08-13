@@ -1,0 +1,54 @@
+name: Bug report
+description: Report a reproducible problem in routing, scripts, templates, or documentation.
+title: "[Bug]: "
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: Do not upload unpublished manuscripts, private data, credentials, or copyrighted figures.
+  - type: input
+    id: version
+    attributes:
+      label: Version or commit
+      placeholder: v0.2.0 or commit SHA
+    validations:
+      required: true
+  - type: dropdown
+    id: area
+    attributes:
+      label: Affected area
+      options:
+        - Skill routing
+        - Evidence or manuscript audit
+        - Peer-review audit
+        - Scientific figures or PowerPoint comparison
+        - Templates or workspace initialization
+        - Documentation or examples
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Minimal reproduction
+      description: Use synthetic or anonymized inputs and include the exact command or prompt.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+    validations:
+      required: true
+  - type: checkboxes
+    id: safety
+    attributes:
+      label: Data-safety confirmation
+      options:
+        - label: I removed private manuscripts, personal paths, secrets, and non-redistributable figures.
+          required: true
